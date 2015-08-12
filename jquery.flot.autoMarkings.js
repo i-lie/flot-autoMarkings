@@ -21,23 +21,23 @@
                     if( this.autoMarkings.showMinMax === true || this.autoMarkings.showAvg === true )
                     {
 	                    if( this.autoMarkings.min==null || this.autoMarkings.max==null || this.autoMarkings.avg==null ){
-				var min=Number.MAX_VALUE;
-				var max=0;
-				var sum = 0;
-				var count = 0;
-				$(this.data).each(function(){
-					if( this[1] < min) min=this[1];
-					if( this[1] > max) max=this[1];
-					count++;
-					sum += this[1];
-				});
-				if( this.autoMarkings.min==null ) this.autoMarkings.min = min;
-				if( this.autoMarkings.max==null ) this.autoMarkings.max = max;
-				if( this.autoMarkings.avg==null ) this.autoMarkings.avg = sum/count;
-			}
-			if( this.autoMarkings.lineWidth ){
-				plot.getOptions().grid.markingsLineWidth = parseInt( this.autoMarkings.lineWidth );
-			}
+							var min=Number.MAX_VALUE;
+							var max=0;
+							var sum = 0;
+							var count = 0;
+							$(this.data).each(function(){
+								if( this[1] < min) min=this[1];
+								if( this[1] > max) max=this[1];
+								count++;
+								sum += this[1];
+							});
+							if( this.autoMarkings.min==null ) this.autoMarkings.min = min;
+							if( this.autoMarkings.max==null ) this.autoMarkings.max = max;
+							if( this.autoMarkings.avg==null ) this.autoMarkings.avg = sum/count;
+						}
+						if( this.autoMarkings.lineWidth ){
+							plot.getOptions().grid.markingsLineWidth = parseInt( this.autoMarkings.lineWidth );
+						}
                     }
                     
                     var seriesColor = this.autoMarkings.color || this.color;
@@ -53,7 +53,7 @@
 	        		}
 	        		if( this.autoMarkings.showAvg === true && this.autoMarkings.avg!=Number.NaN)
 	        		{
-	        			var marking = { color: avgseriesColor };
+	        			var marking = { color: avgseriesColor.replace('rgb(', 'rgba(').replace(')', ',' + this.autoMarkings.avgAlpha + ')') };
 	        			marking[axis] = { from: this.autoMarkings.avg, to: this.autoMarkings.avg };
 	        			plot.getOptions().grid.markings.push(marking);
 	        		}
@@ -64,7 +64,7 @@
         plot.hooks.processOffset.push(autoMarkingsFunction);
     }
 
-    var options = {series: { autoMarkings: {enabled: false, minMaxAlpha: 0.2, lineWidth: 2}}};
+    var options = {series: { autoMarkings: {enabled: false, minMaxAlpha: 0.2, lineWidth: 2, avgAlpha: 1.0}}};
     
     /** Options
      * enabled

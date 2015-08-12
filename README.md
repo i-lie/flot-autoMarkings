@@ -52,6 +52,10 @@ Default: 0.2
 Draw a marking line for the average of the series data.  
 Value: true or false  
 Default: false
+### avgAlpha ###
+Alpha value of avg markings color.  
+Value: double  
+Default: 1.0
 ### min ###
 The minimum value of the series data. If not given the plugin will automatically calculate this value.  
 Value: [double]
