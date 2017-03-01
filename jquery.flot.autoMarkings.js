@@ -130,14 +130,6 @@
 				var avg_label_class = "automarkings-avg-label avg-label-series-" + index;
 				if (placeholder.find("." + avg_label_class.replace(" ", ".")).length == 0) {
 					
-					// calculate the label position
-		        	var o = plot.pointOffset({x: this.data.length - 1, y: Math.floor(this.autoMarkings.avg)});
-
-		        	var label_pos = {
-		        		left: o.left + 4,
-		        		top: o.top
-		        	};
-		        	
 		        	// set the label text
 		        	var label_text = this.autoMarkings.avg;
 		        	if (parseInt(option_auto_marking.avgLabel.maxDecimals) != Number.NaN) {
@@ -153,12 +145,31 @@
 		        		.addClass(avg_label_class)
 			        	.css({
 			        		position: "absolute",
-			        		left: label_pos.left,
-			        		top: label_pos.top,
 			        		color: label_color.toString(),
 			        		dataAvgLabelColor: label_color.toString()
 			        	})
 		        		.appendTo(placeholder);
+
+					// calculate the label position
+		        	var o = plot.pointOffset({
+						x: this.data[this.data.length - 1][0], 
+						y: this.autoMarkings.avg
+					});
+
+					var line_height = parseInt(avg_label.css("line-height"), 10);
+					line_height = isNaN(line_height) ? 0 : Math.abs(line_height);
+
+		        	var label_pos = {
+		        		left: o.left + 4,
+		        		top: o.top - line_height,
+		        	};
+
+			        // set the position
+			        avg_label.css({
+			        	left: label_pos.left,
+			        	top: label_pos.top
+			        });
+			        	
 				}
 			});
         }
